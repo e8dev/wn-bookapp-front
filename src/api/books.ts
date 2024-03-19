@@ -1,67 +1,36 @@
 import axios from 'axios';
 import { apiBaseURL } from './api';
 
+async function fetchData(url: string, method: string, data?: any): Promise<any> {
+  try {
+    const response = await axios({ method, url, data });
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Error fetching data');
+  }
+}
+
 export async function getBooksApi(page: string | null) {
-    try {
-        const response = await axios.get(apiBaseURL + `books/list?page=${page}`);
-        return response.data;
-    } catch (error) {
-        //throw new Error('Error fetching books: ' + error);
-        console.error('Error:', error);
-    }
+  return fetchData(apiBaseURL + `books/list?page=${page}`, 'GET');
 }
 
 export async function getBookByIDApi(id: string) {
-  try {
-      const response = await axios.get(apiBaseURL + `books/details/${id}`);
-      return response.data;
-  } catch (error) {
-      //throw new Error('Error fetching books: ' + error);
-      console.error('Error:', error);
-  }
+  return fetchData(apiBaseURL + `books/details/${id}`, 'GET');
 }
 
 export async function editBookApi(id: string, data: any) {
-  try {
-      const response = await axios.post(apiBaseURL + `books/item/` + id + `/edit`, data);
-      return response.data;
-  } catch (error) {
-      //throw new Error('Error fetching books: ' + error);
-      console.error('Error:', error);
-  }
+  return fetchData(apiBaseURL + `books/item/${id}/edit`, 'POST', data);
 }
 
 export async function addBookApi(data: any) {
-  try {
-      const response = await axios.post(apiBaseURL + `books/add`, data);
-      return response.data;
-  } catch (error) {
-      //throw new Error('Error fetching books: ' + error);
-      console.error('Error:', error);
-  }
+  return fetchData(apiBaseURL + `books/add`, 'POST', data);
 }
 
 export async function deleteBookApi(id: string) {
-    try {
-        const response = await axios.delete(apiBaseURL + `books/item/` + id);
-        return response.data;
-    } catch (error) {
-        //throw new Error('Error fetching books: ' + error);
-        console.error('Error:', error);
-    }
+  return fetchData(apiBaseURL + `books/item/${id}`, 'DELETE');
 }
 
-export async function searchBookApi(s_text: string, s_item: string, page:string) {
-    try {
-        const response = await axios.get(apiBaseURL + `books/list?page=${page}&search_q=${s_text}&search_item=${s_item}`);
-        return response.data;
-    } catch (error) {
-        //throw new Error('Error fetching books: ' + error);
-        console.error('Error:', error);
-    }
+export async function searchBookApi(s_text: string, s_item: string, page: string) {
+  return fetchData(apiBaseURL + `books/list?page=${page}&search_q=${s_text}&search_item=${s_item}`, 'GET');
 }
- 
-
-
-
-

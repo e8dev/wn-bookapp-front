@@ -19,63 +19,38 @@ const searchItems = [
   {"name":"ISBN","handler":"isbn"},
 ];
 
-
 const Dashboard = () => {
-
   const [searchParams, setSearchParams] = useSearchParams();
   const [books, setBooks] = useState<Book[]>([]);
-
-  //filter
   const [searchText, setSearchText] = useState("");
   const [searchItem, setSearchItem] = useState(searchItems[0].handler);
-
-
-  //pagination
   const [pagination, setPagination] = useState<IPagination>();
-
   let currentPage: string = searchParams.get("page") || defaultPage;
 
   useEffect(() => {
-      getBooks(currentPage);
+    getBooks(currentPage);
   }, [currentPage]);
 
-  async function handleSearch(){
-
+  async function handleSearch() {
     setSearchParams({ page: defaultPage });
     getBooks(defaultPage);
-
   }
 
   async function getBooks(page: string) {
-
-      const result = await searchBookApi(searchText, searchItem, page);
-      //const result = await getBooksApi(page);
-
-      console.log(result);
-
-      if(result.success == true && result.data.books){
-        if(result.data.books.length > 0){
-          setBooks(result.data.books);
-          setPagination({
-              totalPages: result.data.pagination.totalPages,
-              currentPage: result.data.pagination.currentPage,
-              onPageChange: onPageChange
-          });
-        }else{
-          setBooks([]);
-          setSearchParams({ page: defaultPage });
-          setPagination({
-              totalPages: 1,
-              currentPage: parseInt(defaultPage),
-              onPageChange: onPageChange
-          });
-        }
-          
-      }
+    const result = await searchBookApi(searchText, searchItem, page);
+    if (result.success && result.data.books) {
+      const { books, pagination } = result.data;
+      setBooks(books);
+      setPagination({
+        totalPages: pagination.totalPages || 1,
+        currentPage: pagination.currentPage || parseInt(defaultPage),
+        onPageChange: onPageChange
+      });
+    }
   }
 
   function onPageChange(page: number) {
-      setSearchParams({ page: page.toString() });
+    setSearchParams({ page: page.toString() });
   }
 
   const handleClearFilters = () => {
@@ -85,7 +60,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getBooks(currentPage);
-}, [searchText, searchItem]);
+  }, [searchText, searchItem, currentPage]);
 
   return (
     <PageContainer title="Books List" description="Main page">

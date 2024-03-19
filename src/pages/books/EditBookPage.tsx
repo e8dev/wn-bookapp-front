@@ -27,7 +27,6 @@ const EditBookPage:FC = () => {
   useEffect(() => {
     //load book details
     handleGetBookByID();
-
   },[])
 
   const handleGetBookByID = async () => {
@@ -48,26 +47,21 @@ const EditBookPage:FC = () => {
   const handleEditBook = async () => {
 
     if(!id){
-      
-      xAlert(
-        {
+      xAlert({
           title: "Validation error",
           text: "Book ID is empty",
           icon: "error",
-        }
-      );
+        });
       return;
     }
     //title
     if( !bookTitle ){
       setBookTitleErr(true);
-      xAlert(
-        {
+      xAlert({
           title: "Validation error",
           text: "Book's Title cannot be empty",
           icon: "error",
-        }
-      );
+        });
       return;
     }else{
       setBookTitleErr(false);
@@ -75,13 +69,11 @@ const EditBookPage:FC = () => {
     //author
     if( !bookAuthor ){
       setBookAuthorErr(true);
-      xAlert(
-        {
+      xAlert({
           title: "Validation error",
           text: "Book's Author cannot be empty",
           icon: "error",
-        }
-      );
+        });
       return;
     }else{
       setBookAuthorErr(false);
@@ -101,13 +93,11 @@ const EditBookPage:FC = () => {
     setIsProcessing(false);
 
       if(result.success == true && result.data.id){
-        xAlert(
-          {
+        xAlert({
             title: "Book was updated",
             text: "",
             icon: "success",
-          }
-        );
+          });
       }
 
   }
