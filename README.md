@@ -1,28 +1,48 @@
 # My Books App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a web application for managing a collection of books. It allows users to add, edit, and delete books, as well as filter and search for books based on various criteria.
 
-## Description
+## Installation
 
-In the project main work is done about the project structure and ability to expand functionality using modular skeleton.
+To install dependencies, run the following command:
 
-In the src folder:
-
-api - this folder contains: api.ts - setup file  (basic url, +ability to intergate authorization here and setup axios lib parameters) , and also individual services routes such as books.ts
-
-components - this folder contains layout components ("layout" folder) and commonly used components ("misc") such as pagination, alerts, etc.
-
-pages - this folder contains pages of the app
-
-routes - this folder contains routes of the app
-
-styles - this folder contains styles files
-
-types - this folder contains types/interfaces
+```
+npm install
+```
 
 
+## Usage
+
+To run the app on the default port (3000), use the following command:
+
+```
+npm install
+npm start
+```
+
+Make sure to set any necessary environment variables before running the app.
+
+## Structure
+
+The project is structured as follows:
+
+- `api`: Contains setup files and individual service routes.
+- `components`: Contains layout components and commonly used components.
+- `pages`: Contains pages of the app.
+- `routes`: Contains routes of the app.
+- `styles`: Contains style files.
+- `types`: Contains types/interfaces.
+
+The modular structure allows for easy expansion of functionality and separation of concerns.
 
 ## Edit / Add Book
 
-Form to edit or add book is using custom BookForm component because both methods require the same fields.
-Handlers for these 2 methods are different so we keep them in the edit/add pages accordingly.
+The form to edit or add a book uses a custom `BookForm` component because both methods require the same fields. Handlers for these methods are kept in the respective edit/add pages.
+
+The `BookForm` component facilitates reusability and maintainability by centralizing the form logic.
+
+
+## TODO
+
+To improve dev perfomance it is recommended to install vite and husky.
+
