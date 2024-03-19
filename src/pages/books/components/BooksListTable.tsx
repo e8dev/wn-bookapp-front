@@ -6,13 +6,10 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Grid,
-    FormControl, InputLabel, Select, MenuItem, FormGroup
 } from '@mui/material';
-import {Button, TextField} from '@mui/material';
+import {Button, } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import DashboardCard from '../../../components/shared/DashboardCard';
 import { Book } from '../../../types/Book';
 import { xAlert } from '../../../components/misc/Alert';
 import { deleteBookApi } from '../../../api/books';
@@ -20,25 +17,13 @@ import { deleteBookApi } from '../../../api/books';
 interface BookListProps {
     books: Book[];
     currentPage: string;
-    getBooks: (page: string | null) => Promise<void>;
+    getBooks: (page: string) => Promise<void>;
 }
-
-//list of search items
-const searchItems = [
-    {"name":"Title","handler":"title"},
-    {"name":"Author","handler":"author"},
-    {"name":"ISBN","handler":"isbn"},
-];
 
 export const BooksListTable: React.FC<BookListProps> = ({ books, currentPage, getBooks }) => {
 
-    const navigate = useNavigate();
-
     //TODO: add processing button
     const [isProcessing, setIsProcessing] = useState(false);
-
-    const [searchText, setSearchText] = useState("");
-    const [searchItem, setSearchItem] = useState(searchItems[0].handler);
 
     //before deleteing any data we show alert to user
     const handleDeleteBook = async (id: string, title: string) => {
@@ -106,32 +91,8 @@ export const BooksListTable: React.FC<BookListProps> = ({ books, currentPage, ge
 
     return (
 
-        <DashboardCard title="Books List">
-            <Box>
-                <FormGroup sx={{position: 'flex', flexDirection: 'row', justifyContent: 'start', alignItems:'center'}} >
-                    <TextField
-                        sx={{marginRight:"6px"}}
-                        label="Search" 
-                        variant="outlined" 
-                        value={""}
-                        onChange={(e) => {
-                            //setBookTitle(e.target.value)
-                        }}
-                    />
-                    <Select
-                        sx={{marginRight:"6px"}}
-                        value={searchItem}
-                        onChange={(e) => {
-                            setSearchItem(e.target.value)
-                        }}
-                    >
-                    {searchItems.map((item, index) => {
-                        return <MenuItem value={item.handler}>{item.name}</MenuItem>;
-                    })}
-                    </Select>
-                    <Button>SEARCH</Button>
-                </FormGroup>
-            </Box>
+        
+            
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
                 <Table
                     aria-label="simple table"
@@ -221,6 +182,6 @@ export const BooksListTable: React.FC<BookListProps> = ({ books, currentPage, ge
                     </TableBody>
                 </Table>
             </Box>
-        </DashboardCard>
+        
     );
 };

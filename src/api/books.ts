@@ -49,7 +49,19 @@ export async function deleteBookApi(id: string) {
         //throw new Error('Error fetching books: ' + error);
         console.error('Error:', error);
     }
-  }
-  
+}
+
+export async function searchBookApi(s_text: string, s_item: string, page:string) {
+    try {
+        const response = await axios.get(apiBaseURL + `books/list?page=${page}&search_q=${s_text}&search_item=${s_item}`);
+        return response.data;
+    } catch (error) {
+        //throw new Error('Error fetching books: ' + error);
+        console.error('Error:', error);
+    }
+}
+ 
+
+
 
 
